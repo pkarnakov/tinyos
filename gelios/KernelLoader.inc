@@ -553,10 +553,10 @@ jnz .fortw1
   
   
 l_starttext: db 'Starting Gelios. Reading data from the disk', 0
-l_videotext: db 0xD,0xA,0xA,0xA,0xA,0xA,0xA,0xA,0xA,' Operating system project';' GELIOS Operating System'
-             db 0xD, 0xA, 0xA,' Compiled on NASM',
-             db 0xD,0xA,' ',__DATE__,' ',__TIME__,0xD,0xA,
-             db 0xD, 0xA, 0xA,' Author: Karnakov Petr',0xD,0xA,' e-mail: petakarn1@gmail.com',0
+l_videotext: db `\r\n\n\n\n\n\n\n\n Gelios Operating System`
+             db `\r\n\n Compiled with NASM`,
+             db `\r\n `,__DATE__,' ',__TIME__,`\r\n`,
+             db `\r\n\n Petr Karnakov (pkarnakov@gmail.com)` ,0
 
 l_CodePtr:
   dd StartKernelCode

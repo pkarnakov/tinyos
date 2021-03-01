@@ -109,7 +109,7 @@ KeyMan:
   mov dword [es:multiple], 0
   jmp .next
   .next_right:
-  cmp al, 0x47
+  cmp al, 0x3E  ; F4
   jnz .next_pic
       PUSH ES
       PUSH DS

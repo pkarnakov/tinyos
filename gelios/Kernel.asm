@@ -479,7 +479,15 @@ sMEM1:
 sMEM2:
   db '        KHz' ,0xA, 0 
 string2:
-  db 'F1   помощь',0xA,'F2   информация о системе',0xA,'F3   вернуть курсор в начало',0xA,'ESC  сменить видеорежим',0xA,'F10  перезагрузка ядра',0xA,'->   выбор функции',0xA,'HOME картинка',0xA,'DEL  очистить',0xA, 0
+  db `F1   help \n`
+  db `F2   system information\n`
+  db `F3   reset cursor\n`
+  db `F4   draw picture\n`
+  db `ESC  change videomode\n`
+  db `F10  restart kernel\n`
+  db `->   select application\n`
+  db `DEL  clear screen\n`
+  db 0
 
   
 ;===============================================================================
