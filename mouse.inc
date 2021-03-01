@@ -6,7 +6,7 @@ irq12:
 push es
 push ds
 pushad
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 call Wait8042BufferEmpty
 in al, 0x60 ; Читаем байт данных от мыши
@@ -64,7 +64,7 @@ mov dword [es:currentpos], eax
 mov ebp, eax ; Получили новый адрес курсора
 
 ; Восстанавливаем старые данные
-mov ax, gdt_video-gdt_0
+mov ax, gdt.video-gdt
 mov gs, ax
 xor edi, edi
 mov al, 24
@@ -274,7 +274,7 @@ jmp endmouse
 block9:
 test byte [es:mousedata], 1
 jz near endmouse
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov dword [es:tsswrite], 0
 mov byte [es:counttask], 0
@@ -282,9 +282,9 @@ mov byte [es:curtask], 0
 mov al, 0x20 ; Разрешаем прерывания
 out 0xA0, al
 out 0x20, al
-test byte [es:gdt_tss+5], 10b
+test byte [es:gdt.tss+5], 10b
 jnz .next
-jmp gdt_tss-gdt_0:0
+jmp gdt.tss-gdt:0
 .next:
 popad
 pop ds
@@ -488,10 +488,10 @@ pushad
    call kb_read
 
 ; Рисуем курсор
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov ebp, [es:currentpos]
-mov ax, gdt_video-gdt_0
+mov ax, gdt.video-gdt
 mov gs, ax
 mov edi, 0
 mov al, 24

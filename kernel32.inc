@@ -55,10 +55,10 @@ string:
 pushad
 push es
 push ds
-mov ax, gdt_chars-gdt_0
+mov ax, gdt.chars-gdt
 mov ds, ax
 mov esi, 0
-mov ax, gdt_video-gdt_0
+mov ax, gdt.video-gdt
 mov gs, ax
 mov bl, [fs:ebp]
 mov cl, 0x0
@@ -90,9 +90,9 @@ push fs
 push ds
 push es
 push eax
-mov ax, gdt_TSSs-gdt_0
+mov ax, gdt.tssbuf-gdt
 mov ds, ax
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov esi, [cs:tsswrite]
 mov dword [ds:esi], 0    ; LINK
@@ -154,7 +154,7 @@ add esi, 4
 mov ah, 0
 mov al, [cs:counttask]
 shl ax, 4
-add ax, gdt_task0_ldt-gdt_0
+add ax, gdt.task0_ldt-gdt
 mov word [ds:esi], ax     ; LDTR
 mov word [ds:esi+2], 0
 add esi, 4
@@ -179,12 +179,12 @@ add esi, 8
 mov word [ds:esi], sssize-1     ; LDT_SS
 mov eax, [cs:tsswrite]
 add eax, ldtsize+tsssize
-mov cx, gdt_gdt-gdt_0
+mov cx, gdt.gdt-gdt
 mov es, cx
-mov ch, [es:gdt_TSSs-gdt_0+7]
-mov cl, [es:gdt_TSSs-gdt_0+4]
+mov ch, [es:gdt.tssbuf-gdt+7]
+mov cl, [es:gdt.tssbuf-gdt+4]
 shl ecx, 16
-mov cx, [es:gdt_TSSs-gdt_0+2]
+mov cx, [es:gdt.tssbuf-gdt+2]
 add eax, ecx
 mov word [ds:esi+2], ax
 shr eax, 16
@@ -196,12 +196,12 @@ add esi, 8
 mov word [ds:esi], ss0size-1     ; LDT_SS0
 mov eax, [cs:tsswrite]
 add eax, ldtsize+tsssize+sssize
-mov cx, gdt_gdt-gdt_0
+mov cx, gdt.gdt-gdt
 mov es, cx
-mov ch, [es:gdt_tss-gdt_0+7]
-mov cl, [es:gdt_tss-gdt_0+4]
+mov ch, [es:gdt.tss-gdt+7]
+mov cl, [es:gdt.tss-gdt+4]
 shl ecx, 16
-mov cx, [es:gdt_tss-gdt_0+2]
+mov cx, [es:gdt.tss-gdt+2]
 add eax, ecx
 mov word [ds:esi+2], ax
 shr eax, 16
@@ -213,12 +213,12 @@ add esi, 8
 mov word [ds:esi], ss1size-1    ; LDT_SS1
 mov eax, [cs:tsswrite]
 add eax, ldtsize+tsssize+sssize+ss0size
-mov cx, gdt_gdt-gdt_0
+mov cx, gdt.gdt-gdt
 mov es, cx
-mov ch, [es:gdt_tss-gdt_0+7]
-mov cl, [es:gdt_tss-gdt_0+4]
+mov ch, [es:gdt.tss-gdt+7]
+mov cl, [es:gdt.tss-gdt+4]
 shl ecx, 16
-mov cx, [es:gdt_tss-gdt_0+2]
+mov cx, [es:gdt.tss-gdt+2]
 add eax, ecx
 mov word [ds:esi+2], ax
 shr eax, 16
@@ -230,12 +230,12 @@ add esi, 8
 mov word [ds:esi], ss2size-1     ; LDT_SS2
 mov eax, [cs:tsswrite]
 add eax, ldtsize+tsssize+sssize+ss0size+ss1size
-mov cx, gdt_gdt-gdt_0
+mov cx, gdt.gdt-gdt
 mov es, cx
-mov ch, [es:gdt_tss-gdt_0+7]
-mov cl, [es:gdt_tss-gdt_0+4]
+mov ch, [es:gdt.tss-gdt+7]
+mov cl, [es:gdt.tss-gdt+4]
 shl ecx, 16
-mov cx, [es:gdt_tss-gdt_0+2]
+mov cx, [es:gdt.tss-gdt+2]
 add eax, ecx
 mov word [ds:esi+2], ax
 shr eax, 16
@@ -248,12 +248,12 @@ add esi, 8
 mov word [ds:esi], vibuffersize/4096
 mov eax, [cs:tsswrite]
 add eax, ldtsize+tsssize+sssize+ss0size+ss1size+ss2size
-mov cx, gdt_gdt-gdt_0
+mov cx, gdt.gdt-gdt
 mov es, cx
-mov ch, [es:gdt_tss-gdt_0+7]
-mov cl, [es:gdt_tss-gdt_0+4]
+mov ch, [es:gdt.tss-gdt+7]
+mov cl, [es:gdt.tss-gdt+4]
 shl ecx, 16
-mov cx, [es:gdt_tss-gdt_0+2]
+mov cx, [es:gdt.tss-gdt+2]
 add eax, ecx
 mov word [ds:esi+2], ax
 shr eax, 16
@@ -280,7 +280,7 @@ popad
 iretd
 .end:
 push fs
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov ebp, taskerror
 mov edi, visizew*vibytes*300
@@ -595,7 +595,7 @@ mov esi, ebx
 shr esi, 6
 inc esi
 or esi, 0xF0000000
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov edi, selbuf
 mov dx, 0x170
@@ -638,7 +638,7 @@ mov esi, ebx
 shr esi, 6
 inc esi
 or esi, 0xF0000000
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov edi, selbuf2
 mov dx, 0x170
@@ -711,7 +711,7 @@ out dx, al
 mov dx, bx
 call bsywaitcd
 call drqwaitcd
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov eax, esi
 mov byte [fs:packet+5], al

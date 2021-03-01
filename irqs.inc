@@ -61,55 +61,43 @@ iretd
 
 ; Обработчик прерывания IRQ0
 irq0:
-  pushad
-  push ds
-  mov ax, gdt_cswr-gdt_0
-  mov ds, ax
+  push ax
+  push bx
 
-  ;printchar [skipn], 2
-  ;inc byte [skipn]
-  ;jnz .end
-  ;printchar [skipn], 3
-
-  mov bl, [ds:counttask]
+  mov bl, [cs:counttask]
   cmp bl, 0
   jz .end
 
   mov ah, 0
-  mov al, [ds:curtask]
+  mov al, [cs:curtask]
   inc al
   div bl
-  mov [ds:curtask], ah
-  mov al, 0
-  shr ax, 4
-  ; ax: pointer to TSS of next task
-  add ax, gdt_task0_tss-gdt_0
-  mov bx, ax
+  mov [cs:curtask], ah
+  mov bx, 0
+  mov bl, ah
+  shl bx, 4
+  lea bx, [gdt.task0_tss-gdt + bx]
 
-  test byte [bx+5+gdt_0], 10b
+  test byte [cs:gdt+bx+5], 10b
   ; if task busy, return
   jnz .end
 
   ; else swith to next task
-  mov word [jmpinf+4], bx
-
+  mov word [cs:jmpinf+4], bx
   mov al, 0x20
   out 0x20, al
-  jmp far [jmpinf]
-  pop ds
-  popad
+  pop bx
+  pop ax
+  jmp far [cs:jmpinf]
   iretd
 
   .end:
   mov al, 0x20
   out 0x20, al
-  pop ds
-  popad
+  pop bx
+  pop ax
   iretd
 
 jmpinf:
 dd 0
 dd 0
-skipn:
-dd 0
-tss_str TIMES 100 db 0

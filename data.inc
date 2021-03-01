@@ -10,15 +10,15 @@ filename TIMES 81 db 0
 ; Сегмент TSS ядра
 tss:
   dd 0, 1023
-  dd gdt_ss0-gdt_0, 1023
-  dd gdt_ss1-gdt_0, 1023
-  dd gdt_ss2-gdt_0, 0
+  dd gdt.ss0-gdt, 1023
+  dd gdt.ss1-gdt, 1023
+  dd gdt.ss2-gdt, 0
   dd code32, 10b
   dd 0, 0
   dd 0, 0
   dd 1023, 0
   dd 0, 0
-  dd 0, gdt_cs-gdt_0, gdt_ss-gdt_0, 0, 0, 0, 0, 0
+  dd 0, gdt.cs-gdt, gdt.ss-gdt, 0, 0, 0, 0, 0
 .end:
 
 tsswrite dd 0 ; Текущее смещение записи в TSSs
@@ -35,7 +35,7 @@ basecode dd 0 ; Содержит адрес начала кода из реал�
 
 ; Данные для загрузки в GDTR
 gdt_ptr:
-      dw gdt_end-gdt_0-1
+      dw gdt.end-gdt-1
       dw 0
       dw 0
 

@@ -1,8 +1,8 @@
 ; Необходимые константы
-%idefine sssize 1024 ; размер стека0
-%idefine ss0size 1024 ; размер стека1
-%idefine ss1size 1024 ; размер стека2
-%idefine ss2size 1024 ; размер стека3
+%idefine sssize 1024 * 16 ; размер стека0
+%idefine ss0size 1024 * 16 ; размер стека1
+%idefine ss1size 1024 * 16 ; размер стека2
+%idefine ss2size 1024 * 16 ; размер стека3
 %idefine visizew 1024 ; размер экрана по горизонтали
 %idefine visizeh 768 ; размер экрана по вертикали
 %idefine vibytes 3 ; количество байт на пиксель
@@ -31,15 +31,15 @@ int 0x10
 mov dword eax, [cs:0x8000+0x28]
 mov ecx, eax
 add ecx, 1024*64*3
-mov word [cs:gdt_video+2], ax
+mov word [cs:gdt.video+2], ax
 shr eax, 16
-mov byte [cs:gdt_video+4], al
-mov byte [cs:gdt_video+7], ah
+mov byte [cs:gdt.video+4], al
+mov byte [cs:gdt.video+7], ah
 
-mov word [cs:gdt_evideo+2], cx
+mov word [cs:gdt.evideo+2], cx
 shr ecx, 16
-mov byte [cs:gdt_evideo+4], cl
-mov byte [cs:gdt_evideo+7], ch
+mov byte [cs:gdt.evideo+4], cl
+mov byte [cs:gdt.evideo+7], ch
 
 
 ;mov ax, 0
@@ -72,15 +72,15 @@ mov byte [cs:gdt_evideo+7], ch
 ;mov dword eax, [es:0x8000+0x28]
 ;mov ecx, eax
 ;add ecx, 1024*64*3
-;mov word [cs:gdt_video+2], ax
+;mov word [cs:gdt.video+2], ax
 ;shr eax, 16
-;mov byte [cs:gdt_video+4], al
-;mov byte [cs:gdt_video+7], ah
+;mov byte [cs:gdt.video+4], al
+;mov byte [cs:gdt.video+7], ah
 ;
-;mov word [cs:gdt_evideo+2], cx
+;mov word [cs:gdt.evideo+2], cx
 ;shr ecx, 16
-;mov byte [cs:gdt_evideo+4], cl
-;mov byte [cs:gdt_evideo+7], ch
+;mov byte [cs:gdt.evideo+4], cl
+;mov byte [cs:gdt.evideo+7], ch
 
 ; Запрет аппаратных прерываний
 cli
@@ -92,11 +92,11 @@ mov dword [cs:basecode], eax
 
 ; Вычисляем адрес таблицы GDT
   mov ax, cs
-  mov bx, gdt_0
+  mov bx, gdt
   call adress
 ; Помещаем в дескриптор GDT
-  mov byte [cs:gdt_gdt+4], al
-  mov word [cs:gdt_gdt+2], bx
+  mov byte [cs:gdt.gdt+4], al
+  mov word [cs:gdt.gdt+2], bx
 ; И в область для регистра GDTR
   mov word [cs:gdt_ptr+4], ax
   mov word [cs:gdt_ptr+2], bx
@@ -106,8 +106,8 @@ mov dword [cs:basecode], eax
   mov bx, idt_0
   call adress
 ; Помещаем в дескрипторы
-  mov byte [cs:gdt_idt+4], al
-  mov word [cs:gdt_idt+2], bx
+  mov byte [cs:gdt.idt+4], al
+  mov word [cs:gdt.idt+2], bx
 ; И в область для регистра IDTR
   mov word [cs:idt_ptr+4], ax
   mov word [cs:idt_ptr+2], bx
@@ -117,32 +117,32 @@ mov dword [cs:basecode], eax
   mov bx, 0
   call adress
 ; Определяем дескриптор кода
-  mov byte [cs:gdt_cs+4],al
-  mov word [cs:gdt_cs+2],bx
+  mov byte [cs:gdt.cs+4],al
+  mov word [cs:gdt.cs+2],bx
 ; Определяем дескриптор кода для записи
-  mov byte [cs:gdt_cswr+4],al
-  mov word [cs:gdt_cswr+2],bx
+  mov byte [cs:gdt.cswr+4],al
+  mov word [cs:gdt.cswr+2],bx
 
 ; Определим дескриптор символов
   mov ax, cs
   mov bx, chars
   call adress
-  mov word [cs:gdt_chars+2], bx
-  mov byte [cs:gdt_chars+4], al
+  mov word [cs:gdt.chars+2], bx
+  mov byte [cs:gdt.chars+4], al
 
 ; Определим дескриптор TSS
   mov ax, cs
   mov bx, tss
   call adress
-  mov word [cs:gdt_tss+2], bx
-  mov byte [cs:gdt_tss+4], al
+  mov word [cs:gdt.tss+2], bx
+  mov byte [cs:gdt.tss+4], al
 
 ; Определим дескриптор keystate
   mov ax, cs
   mov bx, keystatus
   call adress
-  mov word [cs:gdt_keystate+2], bx
-  mov byte [cs:gdt_keystate+4], al
+  mov word [cs:gdt.keystate+2], bx
+  mov byte [cs:gdt.keystate+4], al
 
 ; Устанавливаем для IRQ0-IRQ7 номера прерываний 20h-27h
   mov     dx, 0x20
@@ -178,7 +178,7 @@ mov dword [cs:basecode], eax
   or eax, 1 ;Установим бит защищенного режима
   mov cr0, eax ;Запишем назад в CR0
 
-jmp gdt_tss-gdt_0:0; Переход на главную задачу
+jmp gdt.tss-gdt:0; Переход на главную задачу
 
 error:
   mov ax, 0xB800              ; адрес видеобуфера

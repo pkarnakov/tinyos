@@ -1,6 +1,6 @@
 ; Здесь нужно размещать исходные коды приложений на NASM
 app1:
-mov ax, gdt_evideo-gdt_0
+mov ax, gdt.evideo-gdt
 mov es, ax
 mov ax, cs
 mov ds, ax
@@ -11,8 +11,8 @@ mov esi, 0
   mov byte [es:esi*3], cl
   mov byte [es:esi*3+1], bh
   mov byte [es:esi*3+2], bl
-  ;mov ecx, 500
-  ;loop $
+  mov ecx, 500
+  loop $
   inc esi
   cmp esi, 786432
   jnz .for
@@ -73,8 +73,9 @@ dd .color5-app1
 ;----------------------------------------------------------------------
 app1data:
 db 0
+
 app2:
-mov ax, gdt_evideo-gdt_0
+mov ax, gdt.evideo-gdt
 mov es, ax
 mov ebx, 1024*704
 .for:
@@ -89,7 +90,7 @@ jmp $
 app2data:
 db 0
 app3:
-mov ax, gdt_evideo-gdt_0
+mov ax, gdt.evideo-gdt
 mov es, ax
 mov ebx, 1024*704
 .for:
@@ -104,7 +105,7 @@ jmp $
 app3data:
 db 0
 app4:
-mov ax, gdt_evideo-gdt_0
+mov ax, gdt.evideo-gdt
 mov es, ax
 mov ebx, 1024*704
 .for:
@@ -119,7 +120,7 @@ jmp $
 app4data:
 db 0
 app5:
-mov ax, gdt_evideo-gdt_0
+mov ax, gdt.evideo-gdt
 mov es, ax
 mov ebx, 1024*704
 .for:
@@ -134,7 +135,7 @@ jmp $
 app5data:
 db 0
 app6:
-mov ax, gdt_evideo-gdt_0
+mov ax, gdt.evideo-gdt
 mov es, ax
 mov ebx, 1024*704
 .for:
@@ -149,7 +150,7 @@ jmp $
 app6data:
 db 0
 app7:
-mov ax, gdt_evideo-gdt_0
+mov ax, gdt.evideo-gdt
 mov es, ax
 mov ebx, 1024*704
 .for:
@@ -164,7 +165,7 @@ jmp $
 app7data:
 db 0
 app8:
-mov ax, gdt_evideo-gdt_0
+mov ax, gdt.evideo-gdt
 mov es, ax
 mov ebx, 1024*704
 .for:
@@ -180,9 +181,9 @@ app8data:
 db 0
 
 app9:
-mov ax, gdt_evideo-gdt_0 ; Селектор видеобуфера
+mov ax, gdt.evideo-gdt ; Селектор видеобуфера
 mov es, ax
-mov ax, gdt_picture-gdt_0 ; Селектор памяти с картинкой
+mov ax, gdt.picture-gdt ; Селектор памяти с картинкой
 mov ds, ax
 
 repeat:

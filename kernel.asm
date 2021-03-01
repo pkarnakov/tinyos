@@ -25,7 +25,7 @@ start_os_kernel:
 ;============================================================
 BITS 32
 code32:
-mov ax, gdt_picture-gdt_0
+mov ax, gdt.picture-gdt
 mov es, ax
 mov ds, ax
 mov ebx, 100000b
@@ -34,9 +34,9 @@ mov esi, 0
 mov eax, 704*3*2
 int 0x37
 
-mov ax, gdt_evideo-gdt_0 ; Селектор видеобуфера
+mov ax, gdt.evideo-gdt ; Селектор видеобуфера
 mov es, ax
-mov ax, gdt_picture-gdt_0 ; Селектор памяти с картинкой
+mov ax, gdt.picture-gdt ; Селектор памяти с картинкой
 mov ds, ax
 mov edi, 1024*704*3
 mov eax, 8
@@ -46,7 +46,7 @@ movq mm0, [ds:edi] ; MMX - читаем и пишем
 movq [es:edi], mm0 ; данные сразу по 8 байт!
 jnz for
 
-mov ax, gdt_picture-gdt_0
+mov ax, gdt.picture-gdt
 mov es, ax
 mov ds, ax
 mov ebx, 110000b
@@ -55,9 +55,9 @@ mov edi, 0
 mov eax, 2*64*3
 int 0x37
 
-mov ax, gdt_video-gdt_0 ; Селектор видеобуфера
+mov ax, gdt.video-gdt ; Селектор видеобуфера
 mov es, ax
-mov ax, gdt_picture-gdt_0 ; Селектор памяти с картинкой
+mov ax, gdt.picture-gdt ; Селектор памяти с картинкой
 mov ds, ax
 mov edi, 1024*64*3
 mov esi, 1024*64*3
@@ -78,7 +78,7 @@ out 0xA1, al
 
 sti
 
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov ds, ax
 mov es, ax
 mov fs, ax
@@ -97,7 +97,7 @@ jnz .for
 
 
 ; Читаем картинки с диска
-mov ax, gdt_picture-gdt_0 
+mov ax, gdt.picture-gdt 
 mov es, ax
 mov ds, ax
 
@@ -137,9 +137,9 @@ jmp forhlt1
 
 for6:
 
-mov ax, gdt_evideo-gdt_0 ; Селектор видеобуфера
+mov ax, gdt.evideo-gdt ; Селектор видеобуфера
 mov es, ax
-mov ax, gdt_picture-gdt_0 ; Селектор памяти с картинкой
+mov ax, gdt.picture-gdt ; Селектор памяти с картинкой
 mov ds, ax
 mov edi, 1024*704*3
 mov eax, 8
@@ -149,9 +149,9 @@ movq mm0, [ds:edi] ; MMX - читаем и пишем
 movq [es:edi], mm0 ; данные сразу по 8 байт!
 jnz for2
 
-mov ax, gdt_evideo-gdt_0 ; Селектор видеобуфера
+mov ax, gdt.evideo-gdt ; Селектор видеобуфера
 mov es, ax
-mov ax, gdt_picture-gdt_0 ; Селектор памяти с картинкой
+mov ax, gdt.picture-gdt ; Селектор памяти с картинкой
 mov ds, ax
 mov edi, 1024*704*3*2
 mov esi, 1024*704*3

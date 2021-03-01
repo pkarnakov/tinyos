@@ -21,7 +21,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -37,7 +37,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -53,7 +53,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -69,7 +69,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -85,7 +85,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -101,7 +101,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -117,7 +117,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -133,7 +133,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -149,7 +149,7 @@ test al, 10000000b
 jz near keyend
 cmp byte [cs:keybufferstatus], 1
 jnz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov byte [es:keybufferstatus], 0
 mov eax, [es:basecode]
@@ -173,16 +173,16 @@ jmp keyend
 key10:
 test al, 10000000b
 jz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 mov dword [es:tsswrite], 0
 mov byte [es:counttask], 0
 mov byte [es:curtask], 0
 mov al, 0x20
 out 0x20, al
-test byte [es:gdt_tss+5], 10b
+test byte [es:gdt.tss+5], 10b
 jnz .next
-jmp gdt_tss-gdt_0:0
+jmp gdt.tss-gdt:0
 .next:
 pop es
 popad
@@ -190,7 +190,7 @@ iretd
 key11:
 test al, 10000000b
 jz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 cmp dword [es:tsswrite], 0
 jz near keyend
@@ -203,7 +203,7 @@ jmp keyend
 key13:
 test al, 10000000b
 jz near keyend
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 test byte [es:keystatus], 00001000b
 jz near keyend
@@ -228,7 +228,7 @@ jmp keyend
 key1C:
 jmp keyend
 key1D:
-mov bx, gdt_cswr-gdt_0
+mov bx, gdt.cswr-gdt
 mov es, bx
 or al, 01111111b
 not al
@@ -261,7 +261,7 @@ jmp keyend
 key29:
 jmp keyend
 key2A:
-mov bx, gdt_cswr-gdt_0
+mov bx, gdt.cswr-gdt
 mov es, bx
 or al, 01111111b
 not al
@@ -292,7 +292,7 @@ jmp keyend
 key35:
 jmp keyend
 key36:
-mov bx, gdt_cswr-gdt_0
+mov bx, gdt.cswr-gdt
 mov es, bx
 or al, 01111111b
 not al
@@ -303,7 +303,7 @@ jmp keyend
 key37:
 jmp keyend
 key38:
-mov bx, gdt_cswr-gdt_0
+mov bx, gdt.cswr-gdt
 mov es, bx
 or al, 01111111b
 not al
@@ -316,7 +316,7 @@ jmp keyend
 key3A:
 test al, 10000000b
 jz near keyend
-mov bx, gdt_cswr-gdt_0
+mov bx, gdt.cswr-gdt
 mov es, bx
 mov bl, [es:keystatus]
 or bl, 11011111b
@@ -347,7 +347,7 @@ jmp keyend
 key45:
 test al, 10000000b
 jz near keyend
-mov bx, gdt_cswr-gdt_0
+mov bx, gdt.cswr-gdt
 mov es, bx
 mov bl, [es:keystatus]
 or bl, 10111111b
@@ -358,7 +358,7 @@ jmp keyend
 key46:
 test al, 10000000b
 jz near keyend
-mov bx, gdt_cswr-gdt_0
+mov bx, gdt.cswr-gdt
 mov es, bx
 mov bl, [es:keystatus]
 or bl, 11101111b

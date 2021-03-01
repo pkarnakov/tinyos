@@ -4,7 +4,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '0' 
@@ -22,7 +22,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '1' 
@@ -40,7 +40,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '2' 
@@ -58,7 +58,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '3' 
@@ -76,7 +76,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '4' 
@@ -94,7 +94,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '5' 
@@ -112,19 +112,19 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '6' 
 mov ebp, texte
 mov edi, visizew*vibytes*(visizeh/2)
 int 0x32
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov es, ax
 dec byte [es:counttask]
 mov byte [es:curtask], 0
 sub dword [es:tsswrite], sumsize
-jmp gdt_tss-gdt_0:0
+jmp gdt.tss-gdt:0
 pop edi
 pop ebp
 pop fs
@@ -136,7 +136,7 @@ exc7:
 ;push fs
 ;push ebp
 ;push edi
-;mov ax, gdt_cswr-gdt_0
+;mov ax, gdt.cswr-gdt
 ;mov fs, ax
 ;mov byte [fs:textenum], '0' 
 ;mov byte [fs:textenum+1], '7' 
@@ -157,7 +157,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '8' 
@@ -175,7 +175,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], '9' 
@@ -195,7 +195,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], 'A' 
@@ -215,7 +215,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], 'B' 
@@ -235,7 +235,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], 'C' 
@@ -255,7 +255,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], 'D' 
@@ -273,7 +273,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], 'E' 
@@ -291,7 +291,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '0' 
 mov byte [fs:textenum+1], 'F' 
@@ -309,7 +309,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '0' 
@@ -327,7 +327,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '1' 
@@ -345,7 +345,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '2' 
@@ -363,7 +363,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '3' 
@@ -381,7 +381,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '4' 
@@ -399,7 +399,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '5' 
@@ -417,7 +417,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '6' 
@@ -435,7 +435,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '7' 
@@ -453,7 +453,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '8' 
@@ -471,7 +471,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], '9' 
@@ -489,7 +489,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], 'A' 
@@ -507,7 +507,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], 'B' 
@@ -525,7 +525,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], 'C' 
@@ -543,7 +543,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], 'D' 
@@ -561,7 +561,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], 'E' 
@@ -579,7 +579,7 @@ push ax
 push fs
 push ebp
 push edi
-mov ax, gdt_cswr-gdt_0
+mov ax, gdt.cswr-gdt
 mov fs, ax
 mov byte [fs:textenum], '1' 
 mov byte [fs:textenum+1], 'F' 
