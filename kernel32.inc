@@ -28,9 +28,7 @@ char:
          mov byte [gs:edi+1], cl
          mov byte [gs:edi+2], cl
          .return:
-         inc edi
-	 inc edi
-	 inc edi
+         add edi, 3
          shl dh, 1
          cmp dh, 10000000b
          jnz .for_x
@@ -97,9 +95,9 @@ mov ds, ax
 mov ax, gdt_cswr-gdt_0
 mov fs, ax
 mov esi, [cs:tsswrite]
-mov dword [ds:esi], 0    	; LINK
+mov dword [ds:esi], 0    ; LINK
 add esi, 4
-mov dword [ds:esi], ss0size-1   	; ESP0
+mov dword [ds:esi], ss0size-1   ; ESP0
 add esi, 4
 mov word [ds:esi], 11100b   ; SS0
 mov word [ds:esi+2], 0
@@ -172,7 +170,7 @@ shr ecx, 16
 and cl, 00001111b
 or cl,  01000000b
 mov word [ds:esi+2], ax
-shr eax, 16          
+shr eax, 16
 mov byte [ds:esi+4], al
 mov ch, ah
 mov word [ds:esi+6], cx
@@ -246,8 +244,8 @@ mov al, 0
 mov word [ds:esi+6], ax
 mov byte [ds:esi+5], 11010010b
 add esi, 8
-		; LDT_video
-mov word [ds:esi], vibuffersize/4096 
+; LDT_video
+mov word [ds:esi], vibuffersize/4096
 mov eax, [cs:tsswrite]
 add eax, ldtsize+tsssize+sssize+ss0size+ss1size+ss2size
 mov cx, gdt_gdt-gdt_0
@@ -473,7 +471,7 @@ ret
 ;============================================================
 
 ;============================================================
-;			О Ш И Б К А ! ! ! ! ! ! !
+; FIXME: possibly wrong
 ; 7. Процедура записывает данные на диск IDE
 ; На входе: esi - LBA-адрес
 ; es:edi - адрес буфера

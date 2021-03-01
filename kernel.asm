@@ -85,15 +85,16 @@ mov fs, ax
 mov eax, 1024*64*3+900
 mov ebx, 10000b
 .for:
-mov edi, filename
-int 0x38
-mov edi, eax
-mov ebp, filename
-int 0x32
-add eax, 1024*3*12
-add ebx, 10000b
-cmp byte [es:filename], 0
+  mov edi, filename
+  int 0x38
+  mov edi, eax
+  mov ebp, filename
+  int 0x32
+  add eax, 1024*3*12
+  add ebx, 10000b
+  cmp byte [es:filename], 0
 jnz .for
+
 
 ; Читаем картинки с диска
 mov ax, gdt_picture-gdt_0 

@@ -155,12 +155,12 @@ mov dword [cs:basecode], eax
   call    set_int_ctrlr
 
 ; Устанавливаем частоту таймера
-	mov   al,0x34            
-	out   0x43,al
-	mov   al,(1193180 / timerfreq)&0xFF            ;1193180 / 100
-	out   0x40,al
-	mov   al,((1193180 / timerfreq)>>8)&0xFF               
-	out   0x40,al
+  mov al, 0x34
+  out 0x43, al
+  mov ax, 1193180 / timerfreq
+  out 0x40, al
+  shr ax, 8
+  out 0x40, al
 
 ; Определяем регистр GDTR
   lgdt [dword cs:gdt_ptr]

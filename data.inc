@@ -8,8 +8,18 @@ taskerror db 'Process limit exceeded!', 0
 filename TIMES 81 db 0
 
 ; Сегмент TSS ядра
-tss: dd 0, 1023, gdt_ss0-gdt_0, 1023, gdt_ss1-gdt_0, 1023, gdt_ss2-gdt_0, 0, code32, 10b, 0, 0, 0, 0, 1023, 0, 0, 0, 0, gdt_cs-gdt_0, gdt_ss-gdt_0, 0, 0, 0, 0, 0 
-tss_end:
+tss:
+  dd 0, 1023
+  dd gdt_ss0-gdt_0, 1023
+  dd gdt_ss1-gdt_0, 1023
+  dd gdt_ss2-gdt_0, 0
+  dd code32, 10b
+  dd 0, 0
+  dd 0, 0
+  dd 1023, 0
+  dd 0, 0
+  dd 0, gdt_cs-gdt_0, gdt_ss-gdt_0, 0, 0, 0, 0, 0
+.end:
 
 tsswrite dd 0 ; Текущее смещение записи в TSSs
 

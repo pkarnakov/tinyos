@@ -2,18 +2,20 @@
 app1:
 mov ax, gdt_evideo-gdt_0
 mov es, ax
+mov ax, cs
+mov ds, ax
 mov esi, 0
 .for:
-mov ax, si
-call spectral
-mov byte [es:esi*3], cl
-mov byte [es:esi*3+1], bh
-mov byte [es:esi*3+2], bl
-mov ecx, 500
-loop $
-inc esi
-cmp esi, 786432
-jnz .for
+  mov ax, si
+  call spectral
+  mov byte [es:esi*3], cl
+  mov byte [es:esi*3+1], bh
+  mov byte [es:esi*3+2], bl
+  ;mov ecx, 500
+  ;loop $
+  inc esi
+  cmp esi, 786432
+  jnz .for
 jmp $
 ;----------------------------------------------------------------------
 ; функция возвращает цвета спектра Red - bl, Green - bh, Blue - cl
@@ -24,50 +26,50 @@ and ax, 1111111111b
 mov bx, 256
 mov edx, 0
 div bx
-and eax, 0xF
-lea edi, [colortable-app1+eax*4] 
+and eax, 0x7
+lea edi, [.colortable-app1+eax*4]
 jmp near [cs:edi]
-color0:
+.color0:
 mov bl, 255
 mov bh, dl
 mov cl, 0
 ret
-color1:
+.color1:
 mov bl, 255
 sub bl, dl
 mov bh, 255
 mov cl, 0
 ret
-color2:
+.color2:
 mov bl, 0
 mov bh, 255
 mov cl, dl
 ret
-color3:
+.color3:
 mov bl, 0
 mov bh, 255
 sub bh, dl
 mov cl, 255
 ret
-color4:
+.color4:
 mov bl, dl
 mov bh, 0
 mov cl, 255
 ret
-color5:
+.color5:
 mov bl, 255
 mov bh, 0
 mov cl, 255
 sub cl, dl
 ret
 ; Таблица переходов:
-colortable:
-dd color0-app1
-dd color1-app1
-dd color2-app1
-dd color3-app1
-dd color4-app1
-dd color5-app1
+.colortable:
+dd .color0-app1
+dd .color1-app1
+dd .color2-app1
+dd .color3-app1
+dd .color4-app1
+dd .color5-app1
 ;----------------------------------------------------------------------
 app1data:
 db 0
