@@ -1,7 +1,7 @@
 QEMU = qemu-system-x86_64
+IMAGEURL = https://pkarnakov.github.io/tinyos/gelios_hdd.img
 
-image.bin: loader.bin kernel.bin
-	cat $^ > $@
+default: build
 
 loader.bin: loader.asm
 	nasm $< -o $@
@@ -9,12 +9,19 @@ loader.bin: loader.asm
 kernel.bin: Kernel.asm $(wildcard *.inc)
 	nasm $< -o $@
 
-c.img:
-	dd if=/dev/zero bs=1024 count=13M of=c.img
+floppy.img: loader.bin kernel.bin
+	cat $^ > $@
 
-qemu: image.bin c.img
-	$(QEMU) -drive file=image.bin,format=raw,if=floppy -boot a -drive file=c.img,if=ide,index=0,media=disk,format=raw
+hdd.img:
+	wget $(IMAGEURL) -O $@
+
+build: floppy.img hdd.img
+
+run: floppy.img hdd.img
+	$(QEMU) -drive file=floppy.img,format=raw,if=floppy -boot a -drive file=hdd.img,if=ide,index=0,media=disk,format=raw
+
+clean:
+	rm -f image.bin floppy.img loader.bin kernel.bin
 
 .SUFFIXES:
-.PHONY: qemu
-
+.PHONY: run clean build default

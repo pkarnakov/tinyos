@@ -1,6 +1,4 @@
 kernel.bin
 loader.bin
-image.bin
-f.img
 floppy.img
-image.qcow2
+hdd.img
